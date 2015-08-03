@@ -4,7 +4,7 @@
 require 'vendor/autoload.php';
 use Parse\ParseClient;
 use Parse\ParseObject;
-ParseClient::initialize('80N6VQEMuBhOGV4F8TfzqnXnXlrEx9bSOQqhrMM6', '2F3RBbLIBLppo6EVVOZ52bTPbcdAIMJMGbKqFq4s', 'j20Z6MOjudlon4i4n8s2huriYX4IFXU50pmu4ZD9');
+ParseClient::initialize($KEY_FROM_PARSE_ACCOUNT1,$KEY_FROM_PARSE_ACCOUNT2,$KEY_FROM_PARSE_ACCOUNT3);
 
 //Establecer el time-zone
 date_default_timezone_set("Europe/Madrid");
@@ -148,10 +148,10 @@ $app->post('/control-estadistico/:accion', function($accion) use ($app){
 $app->post('/prediccion/:municipio/:interaccion', function($municipio, $interaccion) use ($app){
 
     if ($interaccion == "json"){
-        exec('cd /home/ubuntu/projects/stw/practica6/ ; /usr/bin/java -jar Print2columnas.jar http://www.aemet.es/xml/municipios/localidad_' . $municipio . '.xml ' . $interaccion ,$result);
+        exec('cd $PATH_TO_JARS ; java -jar Print2columnas.jar http://www.aemet.es/xml/municipios/localidad_' . $municipio . '.xml ' . $interaccion ,$result);
     }
     else {
-        exec('cd /home/ubuntu/projects/stw/practica6/ ; /usr/bin/java -jar Print2columnas_xml.jar http://www.aemet.es/xml/municipios/localidad_' . $municipio . '.xml ' . $interaccion ,$result);
+        exec('cd $PATH_TO_JARS ; java -jar Print2columnas_xml.jar http://www.aemet.es/xml/municipios/localidad_' . $municipio . '.xml ' . $interaccion ,$result);
     }
 
     $response = $app->response();
@@ -161,7 +161,7 @@ $app->post('/prediccion/:municipio/:interaccion', function($municipio, $interacc
 
 $app->post('/prediccion', function() use ($app){
 
-    /*// No funciona, alguna cache de Tomcat está haciendo que siempre se devuelva el primer parte solicitado
+    /*// First idea was through SOAP service, not working
     ini_set("soap.wsdl_cache_enabled", 0);
     $client = new SoapClient('http://localhost:8080/axis/services/Generar2columnas?wsdl', array('cache_wsdl' => WSDL_CACHE_NONE));
     $result = $client->serviceMethod( "http://www.aemet.es/xml/municipios/localidad_" . $code . ".xml" );
@@ -171,10 +171,10 @@ $app->post('/prediccion', function() use ($app){
     $municipio = $app->request()->post('municipio');
 
     if ($interaccion == "json"){
-        exec('cd /home/ubuntu/projects/stw/practica6/ ; /usr/bin/java -jar Print2columnas.jar http://www.aemet.es/xml/municipios/localidad_' . $municipio . '.xml ' . $interaccion ,$result);
+        exec('cd $PATH_TO_JARS ; java -jar Print2columnas.jar http://www.aemet.es/xml/municipios/localidad_' . $municipio . '.xml ' . $interaccion ,$result);
     }
     else {
-        exec('cd /home/ubuntu/projects/stw/practica6/ ; /usr/bin/java -jar Print2columnas_xml.jar http://www.aemet.es/xml/municipios/localidad_' . $municipio . '.xml ' . $interaccion ,$result);
+        exec('cd $PATH_TO_JARS ; java -jar Print2columnas_xml.jar http://www.aemet.es/xml/municipios/localidad_' . $municipio . '.xml ' . $interaccion ,$result);
     }
 
     $response = $app->response();
