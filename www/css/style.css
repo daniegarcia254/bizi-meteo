@@ -1,0 +1,116 @@
+/* Menu */
+.nav {
+	margin-top: 5px;
+}
+.nav>li {
+	margin-left: 10px;
+}
+
+/* Graficas */
+.grafica{
+  float:left;
+  margin-left:50px;
+  margin-bottom:50px;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.table{
+	width: 30% !important;
+	margin-left: 50px;
+}
+
+/*BIZIS Y MAPA*/
+#contenedor-bizis{
+    width: 210px;
+    text-align: center;
+    float: left;
+}
+
+#contenedor-mapa{
+    float: left;
+    width: 670px;
+}
+#googleMap{
+    width: 670px;
+    height: 500px;
+}
+p#dir{
+    font-weight: bold;
+}
+
+select#estaciones-bizi{
+    width: 175px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+input#input-origen{
+    width: 175px;
+    margin-left: 10px;
+}
+select#formato-bizis-select{
+    float: left;
+    width: 175px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+select#modo-desplazamiento{
+    float: left;
+    width: 175px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+button#buscar-ruta{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+fieldset#bizis-fieldset{
+    width: inherit;
+    border-bottom: none;
+    padding: 10px;
+    margin-top: 10px;
+}
+legend#bizis-legend{
+    border: none;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 10px 10px;
+}
+div#directions-panel {
+	height: 250px;
+	width: 210px;
+	overflow: auto;
+}
+
+
+/*PREDICCION*/
+#prediccion {
+    /*  margin: 20px auto;*/
+    height: 400px;
+    width: 330px;
+    /*border: 1px solid red;*/
+}
+
+#selectores {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#contenedor {
+    text-align: center;
+    width: 330px;
+    margin-left: 20px;
+    float: left;
+}
+label#provincia-label, label#municipio-label, label#interaccion-label {
+    float: left;
+    margin: 5px 5px 0px 10px;
+}
+select#provincia, select#municipio{
+    width: 200px;
+    margin-left: 20%;
+}
+select#interaccion{
+    width: 120px;
+    margin-left: 35%;
+}

@@ -1,0 +1,156 @@
+{
+  "prediccion": [
+    {
+      "dia0": {
+        "f": "2015-05-25",
+        "d0_i1_estados": "12",
+        "d0_i2_estados": "12",
+        "d0_i1_precip": "0",
+        "d0_i2_precip": "0",
+        "d0_i1_viento": "NO",
+        "d0_i2_viento": "NO",
+        "d0_i1_vviento": "30",
+        "d0_i2_vviento": "25",
+        "d0_i1_temp": "22",
+        "d0_i2_temp": "14",
+        "d0_i1_stemp": "22",
+        "d0_i2_stemp": "14",
+        "d0_i1_humedad": "40",
+        "d0_i2_humedad": "70",
+        "d0_uv": "7",
+        "d0_tmin": "14",
+        "d0_tmax": "27",
+        "d0_stmin": "14",
+        "d0_stmax": "27",
+        "d0_hmin": "30",
+        "d0_hmax": "80"
+      }
+    },
+    {
+      "dia1": {
+        "f": "2015-05-26",
+        "d1_i1_estados": "12n",
+        "d1_i2_estados": "11",
+        "d1_i3_estados": "11",
+        "d1_i4_estados": "11",
+        "d1_i1_precip": "0",
+        "d1_i2_precip": "0",
+        "d1_i3_precip": "0",
+        "d1_i4_precip": "0",
+        "d1_i1_viento": "NO",
+        "d1_i2_viento": "NO",
+        "d1_i3_viento": "NO",
+        "d1_i4_viento": "NO",
+        "d1_i1_vviento": "30",
+        "d1_i2_vviento": "25",
+        "d1_i3_vviento": "30",
+        "d1_i4_vviento": "25",
+        "d1_i1_temp": "13",
+        "d1_i2_temp": "22",
+        "d1_i3_temp": "21",
+        "d1_i4_temp": "13",
+        "d1_i1_stemp": "13",
+        "d1_i2_stemp": "22",
+        "d1_i3_stemp": "21",
+        "d1_i4_stemp": "13",
+        "d1_i1_humedad": "60",
+        "d1_i2_humedad": "45",
+        "d1_i3_humedad": "45",
+        "d1_i4_humedad": "65",
+        "d1_uv": "7",
+        "d1_tmin": "12",
+        "d1_tmax": "25",
+        "d1_stmin": "12",
+        "d1_stmax": "25",
+        "d1_hmin": "35",
+        "d1_hmax": "70"
+      }
+    },
+    {
+      "dia2": {
+        "f": "",
+        "d2_i1_estados": "",
+        "d2_i2_estados": "",
+        "d2_i1_precip": "",
+        "d2_i2_precip": "",
+        "d2_i1_viento": "",
+        "d2_i2_viento": "",
+        "d2_i1_vviento": "",
+        "d2_i2_vviento": "",
+        "d2_uv": "",
+        "d2_tmin": "",
+        "d2_tmax": "",
+        "d2_stmin": "",
+        "d2_stmax": "",
+        "d2_hmin": "",
+        "d2_hmax": ""
+      }
+    },
+    {
+      "dia3": {
+        "f": "",
+        "d3_i1_estados": "",
+        "d3_i2_estados": "",
+        "d3_i1_precip": "",
+        "d3_i2_precip": "",
+        "d3_i1_viento": "",
+        "d3_i2_viento": "",
+        "d3_i1_vviento": "",
+        "d3_i2_vviento": "",
+        "d3_uv": "",
+        "d3_tmin": "",
+        "d3_tmax": "",
+        "d3_stmin": "",
+        "d3_stmax": "",
+        "d3_hmin": "",
+        "d3_hmax": ""
+      }
+    },
+    {
+      "dia4": {
+        "f": "",
+        "d4_i1_estados": "",
+        "d4_i1_precip": "",
+        "d4_i1_viento": "",
+        "d4_i1_vviento": "",
+        "d4_uv": "",
+        "d4_tmin": "",
+        "d4_tmax": "",
+        "d4_stmin": "",
+        "d4_stmax": "",
+        "d4_hmin": "",
+        "d4_hmax": ""
+      }
+    },
+    {
+      "dia5": {
+        "f": "",
+        "d5_i1_estados": "",
+        "d5_i1_precip": "",
+        "d5_i1_viento": "",
+        "d5_i1_vviento": "",
+        "d5_tmin": "",
+        "d5_tmax": "",
+        "d5_stmin": "",
+        "d5_stmax": "",
+        "d5_hmin": "",
+        "d5_hmax": ""
+      }
+    },
+    {
+      "dia6": {
+        "f": "",
+        "d6_i1_estados": "",
+        "d6_i1_precip": "",
+        "d6_i1_viento": "",
+        "d6_i1_vviento": "",
+        "d6_tmin": "",
+        "d6_tmax": "",
+        "d6_stmin": "",
+        "d6_stmax": "",
+        "d6_hmin": "",
+        "d6_hmax": ""
+      }
+    }
+  ]
+}
