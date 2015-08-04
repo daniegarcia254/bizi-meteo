@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset=utf-8 />
-	<title>BiZi-Meteo Graphs && Stats</title>
+	<title>BiZi-Meteo Graphs &amp;&amp; Stats</title>
         <link rel="stylesheet" type="text/css" href="../css/style.css">
         <script src="../js/chart.min.js"></script>
         <script src="../js/chart.extension.js"></script>
