@@ -5,6 +5,7 @@ require 'vendor/autoload.php';
 //Init the Parse service SDK
 use Parse\ParseClient;
 use Parse\ParseObject;
+//YOU SHOULD USE YOUR PARSE.COM KEY TO INIT THE CONNECTION
 ParseClient::initialize($KEY_FROM_PARSE_ACCOUNT1,$KEY_FROM_PARSE_ACCOUNT2,$KEY_FROM_PARSE_ACCOUNT3);
 
 //Establish time-zone
