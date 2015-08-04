@@ -20,7 +20,7 @@
 	margin-left: 50px;
 }
 
-/*BIZIS Y MAPA*/
+/*BIZIS && MAP*/
 #contenedor-bizis{
     width: 210px;
     text-align: center;
@@ -83,7 +83,7 @@ div#directions-panel {
 }
 
 
-/*PREDICCION*/
+/*METEO PREDICTION*/
 #prediccion {
     /*  margin: 20px auto;*/
     height: 400px;
