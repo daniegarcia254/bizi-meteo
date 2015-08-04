@@ -1,3 +1,4 @@
+//Handles the behaviour of the city select for the meteo info
 function setmunicipio($municipio,$s) {
   var $select = $('#municipio');
   $select.html('');
@@ -5,7 +6,6 @@ function setmunicipio($municipio,$s) {
   if ($municipio=="") {
     $select.append('<option value="">Municipio</option>');
   }
-
   else {
     $.getJSON('provincias/' + $municipio +'.json', function(data){
       if ("" == $s){ $selected="selected"; }
@@ -23,4 +23,3 @@ function setmunicipio($municipio,$s) {
     });
   }
 }
-
