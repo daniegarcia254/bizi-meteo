@@ -12,9 +12,9 @@ public class Mysql {
 	public Mysql() {
 		try {
 			String myDriver = "com.mysql.jdbc.Driver";
-			String myUrl = "jdbc:mysql://localhost/stw";
+			String myUrl = "jdbc:mysql://localhost/$DB";
 			Class.forName(myDriver);
-			this.conn = DriverManager.getConnection(myUrl, "root", "danie254");
+			this.conn = DriverManager.getConnection(myUrl, $PASSWORD, $USER);
 		} catch (Exception e) {
 			System.out.println("No se pudo conectar a la base de datos");
 			System.out.println(e);
