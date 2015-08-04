@@ -60,7 +60,7 @@ Used technologies for the development:
   * municipio: String
   * formato: String
 
-* Finally, you need to download and install the [PHP Slim Framework](http://www.slimframework.com/) by putting the Slim/ folder in the [www](www) dir 
+* Finally, you need to download and install the [PHP Slim Framework](http://www.slimframework.com/) by putting the Slim/ folder in the [www](www) directory
 
 ## DEMO
 If you don't have the guts to go through all this process, just enjoy the demo: [BiZi-Meteo](http://www.danigarcia-dev.com/stw/)
