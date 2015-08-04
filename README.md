@@ -52,15 +52,15 @@ Used technologies for the development:
   * Replace the vars `$APPLICATION_ID`,`$REST_API_KEY` in the [get_stats_data.php](www/get_stats_data.php) file
 
 * Once you're logged in your _Parse.com_ account and you've created and app, you must go to the _Core_ section and in the _Data_ section create a new class _*Info_Object*_ with the next attributes (columns):
-  * IP: String
-  * tipo: String
-  * exito: Boolean
-  * origen: String
-  * destino: String
-  * desplazamiento: String
-  * provincia: String
-  * municipio: String
-  * formato: String
+  * _IP_: String
+  * _tipo_: String
+  * _exito_: Boolean
+  * _origen_: String
+  * _destino_: String
+  * _desplazamiento_: String
+  * _provincia_: String
+  * _municipio_: String
+  * _formato_: String
 
 * Finally, you need to download and install the [PHP Slim Framework](http://www.slimframework.com/) by putting the Slim/ folder in the [www](www) directory
 
