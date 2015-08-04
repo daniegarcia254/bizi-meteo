@@ -44,6 +44,7 @@ Used technologies for the development:
       
     Two _jars_ should be generated!      
 * In the [app.php](www/app.php) file, replace the var `$PATH_TO_JARS` with the path where you've generated and put the _jars_.
+* In order to store the meteo info, you must create a database with MySQL, and replace the vars `$DB`,`$PASSWORD`,`$USER` in the file [Mysql.java](java-meteo/src/Mysql.java) that handles the connection with the database.
 * You will also need an account on the [Parse.com](https://parse.com/) for a cloud database where the stats are stored.<br>
   When you create the account, you are given with a bunch of _API keys_ that you need to use either for store data or get data. You must:
   * Replace the vars `$APPLICATION_ID`,`$REST_API_KEY`,`$MASTER_KEY` in the [app.php](www/app.php) file
