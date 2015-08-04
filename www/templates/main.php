@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    <!--  MENU BAR -->
     <div class="navbar navbar-inverse">
         <div class="container-fluid">
             <ul class="nav nav-pills">
@@ -16,6 +17,7 @@
             </ul>
         </div>
     </div>
+    <!-- BiZis form container  -->
     <div id="contenedor-bizis">
         <fieldset id="bizis-fieldset">
             <legend id="bizis-legend" class="label label-info">Llegar a una estación Bizi</legend>
@@ -46,20 +48,26 @@
         </fieldset>
 	<div id="directions-panel"></div>
     </div>
+    <!-- End of BiZis FORM container  -->
+    
+    <!--  MAP CONTAINER  -->
     <div id="contenedor-mapa">
         <div id="googleMap"></div>
     </div>
+    <!--  End of MAP CONTAINER  -->
+    
+    <!--  METEO INFO PREDICTION container  -->
     <div id="contenedor">
         <div id="prediccion">
             <?php
-            	//Mostrar Zaragoza por defecto
-	   	        $code=50297;
+            	//Default: shows Zaragoza meteo info 
+	   	$code=50297;
             	$provincia=50;
                 $municipio=$code;
                 $interaccion='xml';
             ?>
         </div>
-
+	<!-- Selectors of "provincia" and city -->
         <div id="selectores" class="form-group">
             <form method="post" id="prediccion-form">
                	 <label id="provincia-label">Provincia:</label>
@@ -134,11 +142,14 @@
             </form>
         </div>
     </div>
+    <!-- End of METEO INFO PREDICTION container  -->
 
+<!-- JS libraries load  -->
 <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&amp;signed_in=true&amp;libraries=places'></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/municipio.js"></script>
 
+<!-- Depending on the "provincia" selected, search for the cities of that "provincia" and fills the city selector  -->
 <script>
     var element = document.getElementById('provincia');
     element.value = '<?php print $provincia; ?>';
@@ -147,37 +158,34 @@
     element.value = "<?php print $interaccion; ?>";
 </script>
 
+<!-- AJAX calls && interaction with the Google Maps Javascript API -->
 <script>
-
     var map;
     var directionsDisplay;
     var geocoder;
     var directionsService = new google.maps.DirectionsService();
 
-    //Al cargar documento llamada para recoger la prediccion por defecto --> Zaragoza
+    //When the document is loaded --> Gets the Zaragoza meteo info by default
     $(document).ready(function(){
         $.post("index.php/prediccion/50297/xml", function(data){
             if (data.length == 0){
                 $('#prediccion').html("<p>Error al conseguir la predicción</p>");
-                //$.post("index.php/control-estadistico/prediccion", {exito: false, origen: '', destino: '', desplazamiento: '',  provincia: 50, municipio: 50297, formato: 'xml'});
             } else {
                 $('#prediccion').html(data);
-                //$.post("index.php/control-estadistico/prediccion", {exito: true, origen: '', destino: '', desplazamiento: '',  provincia: 50, municipio: 50297, formato: 'xml'});
             }
         });
     });
 
-    //Función que inicializa el Mapa y el campo de origen de ruta
+    //Inits the Map && the autocomplete field  -->  Google Maps JS services
     function initialize() {
-
-        //Inicializar autocomplete para dirección origen
+        //Inits autocmplete from Google for the origin field
         var input = document.getElementById('input-origen');
         var options = {
             componentRestrictions: {country: 'es'}
         };
         var autocomplete = new google.maps.places.Autocomplete(input, options);
 
-        //Inicializar mapa
+        //Inits map
         directionsDisplay= new google.maps.DirectionsRenderer();
         geocoder = new google.maps.Geocoder();
         var mapProp = {
@@ -193,14 +201,15 @@
     google.maps.event.addDomListener(window, 'load', initialize);
 
 
-    //Llamada AJAX GET para recoger las estaciones de Bizi de la API de Bizi de Zaragoza
+    //GET all the existing BiZi stations
     function getEstaciones(value){
         $.get("index.php/estaciones-bizi/"+value, function(data){
 
             var select_estaciones = $('#estaciones-bizi');
 
-            //Añadir cada resultado estación al select y al mapa (Marker)
-            if (value == 'json'){ //Datos en Formato JSON
+            //Add every BiZi station to the destiny select field && to the map as Markers
+            //Working with data in JSON format
+            if (value == 'json'){
                 var estaciones = JSON.parse(data);
                 estaciones.result.forEach(function(item){
                     select_estaciones.append(new Option(item.title, item.id));
@@ -217,7 +226,7 @@
                     google.maps.event.addListener(marker, 'click', function(mark) {
                         infowindow.open(map,marker); //Añadir información al Marker
 
-                        //Registar en Parse la accion de consultar la información de un Marker
+                        //Clicking on a Map Marker --> Reg as a stat in Parse.com cloud database
                         geocoder.geocode( { 'latLng': this.position}, function(results, status) {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 $.post("index.php/control-estadistico/infoBizi", {exito: true, origen: results[0].formatted_address, destino: '', desplazamiento: '', provincia: '', municipio: '', formato: ''});
@@ -227,8 +236,8 @@
                         });
                     });
                 });
-
-            } else { //Datos en Formato XML
+	    //Working with data in XML format
+            } else {
                 data.result.estacion.forEach(function(item){
                     select_estaciones.append(new Option(item.title, item.id));
 
@@ -253,7 +262,7 @@
                     google.maps.event.addListener(marker, 'click', function() {
                         infowindow.open(map,marker);  //Añadir información al Marker
 
-                        //Registar en Parse la accion de consultar la información de un Marker
+                        //Clicking on a Map Marker --> Reg as a stat in Parse.com cloud database
                         geocoder.geocode( { 'latLng': this.position}, function(results, status) {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 $.post("index.php/control-estadistico/infoBizi", {exito: true, origen: results[0].formatted_address, destino: '', desplazamiento: '', provincia: '', municipio: '', formato: ''});
@@ -267,14 +276,13 @@
         });
     }
 
-    //GET ruta de la API de Google maps y pintarla en el mapa
+    //GET route from Google Maps JS API and display it in the map
     function getRuta(){
         var formato = $('#formato-bizis-select').val();
         var start = $('#input-origen').val();
         var desplazamiento = $('#modo-desplazamiento').val();
 	var estacionBizi = $('#estaciones-bizi').val();
 
-        //Llamada AJAX POST
         $.post("index.php/calcular-ruta", {formatoDatos: formato, estacionBizi: estacionBizi}, function(data){
             var end = data.lat + "," + data.long;
             var request = {
@@ -290,16 +298,15 @@
                 case 'WALKING': request.travelMode = google.maps.TravelMode.WALKING; break;
             }
 
-            //Pintar respuesta en el mapa --> DRIVING directions
+            //Display response into the map
             directionsService.route(request, function(response, status) {
-		console.log(response);
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(response);
 
                     var origen = response.routes[0].legs[0].start_address;
                     var destino = response.routes[0].legs[0].end_address;
 
-                    //LLAMADAS AJAX POST para registrar la acción en Parse
+                    //Register the route calculation in the Parse.com cloud database
                     $.post("index.php/control-estadistico/rutaBizi", {exito: true, origen: origen, destino: destino, desplazamiento: desplazamiento, provincia: '', municipio: '', formato: formato});
                 } else {
                     $.post("index.php/control-estadistico/rutaBizi", {exito: false, origen: '', destino: '', desplazamiento: '', provincia: '', municipio: '', formato: formato});
@@ -308,7 +315,7 @@
         });
     }
 
-    //Llamada AJAX POST para la predicción del tiempo de un municipio
+    //GET meteo info prediction from a city, display it, and register the action in Parse.com cloud database
     function getPrediccion(){
 
         var provincia = $('#provincia').val();
