@@ -1,10 +1,4 @@
 <?php
-
-// http://tallerdelola.com/stw/graphs.php?tipo=prediccion
-// infoBizi
-// rutaBizi
-
-
 function get_parse($params){
   $url = "https://api.parse.com/1/classes/Info_Object";
   $curl = curl_init();
