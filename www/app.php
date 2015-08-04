@@ -1,12 +1,13 @@
 <?php
 
-//Inicializamos el SDK del servicio Parse
 require 'vendor/autoload.php';
+
+//Init the Parse service SDK
 use Parse\ParseClient;
 use Parse\ParseObject;
 ParseClient::initialize($KEY_FROM_PARSE_ACCOUNT1,$KEY_FROM_PARSE_ACCOUNT2,$KEY_FROM_PARSE_ACCOUNT3);
 
-//Establecer el time-zone
+//Establish time-zone
 date_default_timezone_set("Europe/Madrid");
 
 // Error Handler for any uncaught exception
@@ -19,7 +20,7 @@ $app->error(function (\Exception $e) use ($app) {
     ), 500);
 });
 
-// Twig View Rendering
+// View Rendering
 // -----------------------------------------------------------------------------
 // Setup our renderer and add some global variables
 $app->view = new \Slim\View();
@@ -27,7 +28,7 @@ $app->view->setTemplatesDirectory('templates');
 
 // Welcome Page
 // -----------------------------------------------------------------------------
-// Renderiza la página de inicio
+// Renders the home-main page
 $app->get('/', function () use ($app) {
     $app->render('main.php');
 });
@@ -35,16 +36,16 @@ $app->get('/', function () use ($app) {
 $app->post('/', function() use ($app) {
 });
 
+//Renders the graphs/stats page
 $app->get('/graphs', function () use ($app) {
 	$app->render('graphs.php');
 });
 
-//Según el formato elegido (JSON, XML) --> coger los datos de las estaciones de la API de Bizis Zaragoza y devolverlos
+//GET BIZIS INFO
+//Get data from BiZis Zaragoza API. [formato] indicate the format of the recolected data: JSON or XML
 $app->get('/estaciones-bizi/:formato', function($formato) use ($app){
     $ch = curl_init();
-    $headers = array(
-        'Content-Type: application/json',
-    );
+    $headers = array('Content-Type: application/json');
     $fields = array(
         'srsname' => 'wgs84',
         'start' => 0,
@@ -61,7 +62,6 @@ $app->get('/estaciones-bizi/:formato', function($formato) use ($app){
     curl_setopt($ch, CURLOPT_HEADER, 0);            // No header in the result
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return, do not echo result
 
-    // Fetch and return content, save it.
     $raw_data = curl_exec($ch);
     curl_close($ch);
 
@@ -77,19 +77,16 @@ $app->get('/estaciones-bizi/:formato', function($formato) use ($app){
     }
 });
 
-//Calcular ruta de un punto origen a una estación BiZi destino
+//GET COORDINATES OF BIZI-STATION
+//For a route calculation, gets and returns the coordinates the BiZi destiny station of the route
 $app->post('/calcular-ruta', function() use ($app){
+    //Get data from the formulary
+    $formato = $app->request()->post("formatoDatos");  //Data format
+    $estacion = $app->request()->post("estacionBizi"); //BiZi destiny station
 
-    //Leemos los datos del formulario
-    $formato = $app->request()->post("formatoDatos");
-    $estacion = $app->request()->post("estacionBizi");
-
-
-    //Pedimos a la API de Bizis Zaragoza las coordenadas de la estación de Bizi seleccionada en el formulario
+    //Get from the BiZis Zaragoza API the coordinates of the BiZi destiny station
     $ch = curl_init();
-    $headers = array(
-        'Content-Type: application/json',
-    );
+    $headers = array('Content-Type: application/json');
     $fields = array(
         'fl' => 'geometry',
         'srsname' => 'wgs84'
@@ -104,10 +101,10 @@ $app->post('/calcular-ruta', function() use ($app){
     curl_setopt($ch, CURLOPT_HEADER, 0);            // No header in the result
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return, do not echo result
 
-    // Fetch and return content, save it.
     $raw_data = curl_exec($ch);
     curl_close($ch);
 
+    //Get latitude and longitude from the coordinates	
     if ($formato == 'json') {
         $data = json_decode($raw_data, true);
         $lat = $data['geometry']['coordinates'][1];
@@ -120,6 +117,7 @@ $app->post('/calcular-ruta', function() use ($app){
         $long = $coordenadas[0];
     }
 
+    //Return latitude && longitude as an array
     $response = $app->response();
     $response['Content-Type'] = 'application/json';
     $response->status(200);
@@ -129,9 +127,11 @@ $app->post('/calcular-ruta', function() use ($app){
     ), true));
 });
 
+//SAVE STATS IN PARSE.COM CLOUD DATABASE
 $app->post('/control-estadistico/:accion', function($accion) use ($app){
+    
     $data = $app->request()->post();
-
+    
     $infoObject = ParseObject::create("Info_Object");
     $infoObject->set("IP", getClientIP());
     $infoObject->set("tipo", $accion);
@@ -145,8 +145,11 @@ $app->post('/control-estadistico/:accion', function($accion) use ($app){
     $infoObject->save();
 });
 
+//GET THE METEO INFO
+//[municipio] is the city code && [interaccion] is the data format to work with (JSON or XML)
 $app->post('/prediccion/:municipio/:interaccion', function($municipio, $interaccion) use ($app){
 
+    //Executes the jars that return directly an HTML with the meteo-info ($PATH_TO_JARS is where you have put your jars)
     if ($interaccion == "json"){
         exec('cd $PATH_TO_JARS ; java -jar Print2columnas.jar http://www.aemet.es/xml/municipios/localidad_' . $municipio . '.xml ' . $interaccion ,$result);
     }
@@ -159,17 +162,13 @@ $app->post('/prediccion/:municipio/:interaccion', function($municipio, $interacc
     $response->body(implode($result));
 });
 
+//GET THE METEO INFO (this time parameters are not in the query, but in the form content)
 $app->post('/prediccion', function() use ($app){
-
-    /*// First idea was through SOAP service, not working
-    ini_set("soap.wsdl_cache_enabled", 0);
-    $client = new SoapClient('http://localhost:8080/axis/services/Generar2columnas?wsdl', array('cache_wsdl' => WSDL_CACHE_NONE));
-    $result = $client->serviceMethod( "http://www.aemet.es/xml/municipios/localidad_" . $code . ".xml" );
-    print_r($result);*/
 
     $interaccion = $app->request()->post('interaccion');
     $municipio = $app->request()->post('municipio');
-
+    
+    //Executes the jars that return directly an HTML with the meteo-info ($PATH_TO_JARS is where you have put your jars)
     if ($interaccion == "json"){
         exec('cd $PATH_TO_JARS ; java -jar Print2columnas.jar http://www.aemet.es/xml/municipios/localidad_' . $municipio . '.xml ' . $interaccion ,$result);
     }
@@ -183,6 +182,7 @@ $app->post('/prediccion', function() use ($app){
 
 });
 
+//GETS the client IP
 function getClientIP() {
 
     if (isset($_SERVER)) {
