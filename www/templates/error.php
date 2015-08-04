@@ -4,8 +4,7 @@
 <html>
 
 <head>
-    <title>Trabajo STW - Bizis - Error</title>
-
+    <title>BiZis-Meteo -- Error</title>
 </head>
 
 <body>
