@@ -10,6 +10,7 @@ function get_parse($params){
       CURLOPT_RETURNTRANSFER => 1,
       CURLOPT_URL => $url . '?' . $params,
       CURLOPT_USERAGENT => 'UserAgentString',
+      //YOU SHOULD USE HER YOUR PARSE.COM ID && API-KEY
       CURLOPT_HTTPHEADER => array('X-Parse-Application-ID: XXXX',
                                   'X-Parse-REST-API-Key: XXXX')
     )
